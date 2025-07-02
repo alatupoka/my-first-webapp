@@ -10,13 +10,18 @@
     <button onclick="sayHello()">Greet Me</button>
 
     <p id="greetingText"></p>
+<script>
+  async function sayHello() {
+    const name = document.getElementById('nameInput').value;
+    const res = await fetch('http://localhost:3000/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: `Hello, ${name}! 🎉` })
+    });
+    const data = await res.json();
+    document.getElementById('greetingText').textContent = data.text;
+  }
+</script>
 
-    <script>
-      function sayHello() {
-        const name = document.getElementById('nameInput').value;
-        const greeting = `Hello, ${name}! 🎉`;
-        document.getElementById('greetingText').textContent = greeting;
-      }
-    </script>
   </body>
 </html>
