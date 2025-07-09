@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>e-Cargo Audit Trail</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .details-row { display: none; background-color: #f9fafb; }
+  </style>
+  <script>
+    function toggleDetails(rowId) {
+      const detailRow = document.getElementById('details-' + rowId);
+      if (detailRow.style.display === 'table-row') {
+        detailRow.style.display = 'none';
+      } else {
+        detailRow.style.display = 'table-row';
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-100 text-gray-800 p-6">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6">📍 e-Cargo Audit Trail Logs</h1>
+
+    <!-- Filter Section -->
+    <div class="bg-white shadow p-4 rounded-lg mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+        <div>
+          <label class="block text-sm font-medium">Start Date</label>
+          <input type="date" class="w-full border border-gray-300 rounded p-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">End Date</label>
+          <input type="date" class="w-full border border-gray-300 rounded p-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">User</label>
+          <input type="text" placeholder="User ID or Name" class="w-full border border-gray-300 rounded p-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Module</label>
+          <select class="w-full border border-gray-300 rounded p-2">
+            <option>All</option>
+            <option>Booking</option>
+            <option>Manifest</option>
+            <option>Tracking</option>
+            <option>Admin</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Action</label>
+          <select class="w-full border border-gray-300 rounded p-2">
+            <option>All</option>
+            <option>CREATE</option>
+            <option>UPDATE</option>
+            <option>DELETE</option>
+            <option>LOGIN</option>
+            <option>LOGOUT</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Log Type</label>
+          <select class="w-full border border-gray-300 rounded p-2">
+            <option>All</option>
+            <option>Application</option>
+            <option>System</option>
+            <option>Security</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex justify-end mt-4 space-x-2">
+        <button class="bg-blue-600 text-white px-4 py-2 rounded">Search</button>
+        <button class="bg-gray-300 px-4 py-2 rounded">Reset</button>
+      </div>
+    </div>
+
+    <!-- Logs Table -->
+    <div class="bg-white shadow rounded-lg overflow-x-auto">
+      <table class="w-full table-auto text-left">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="p-3">#</th>
+            <th class="p-3">Timestamp</th>
+            <th class="p-3">User</th>
+            <th class="p-3">Role</th>
+            <th class="p-3">Module</th>
+            <th class="p-3">Action</th>
+            <th class="p-3">Record ID</th>
+            <th class="p-3">Description</th>
+            <th class="p-3">Status</th>
+            <th class="p-3">IP Address</th>
+            <th class="p-3">Log Type</th>
+            <th class="p-3">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="toggleDetails(1)">
+            <td class="p-3">1</td>
+            <td class="p-3">2025-07-09 09:45</td>
+            <td class="p-3">u00234</td>
+            <td class="p-3">CargoManager</td>
+            <td class="p-3">Manifest</td>
+            <td class="p-3">UPDATE</td>
+            <td class="p-3">MNFT-8912</td>
+            <td class="p-3">Updated cargo manifest details</td>
+            <td class="p-3 text-green-600">Success</td>
+            <td class="p-3">192.168.1.101</td>
+            <td class="p-3">Application</td>
+            <td class="p-3 text-blue-600 underline">View</td>
+          </tr>
+          <tr id="details-1" class="details-row border-b">
+            <td colspan="12" class="p-3">
+              <strong>Old Value:</strong> Weight: 500kg; Destination: Dar es Salaam<br />
+              <strong>New Value:</strong> Weight: 550kg; Destination: Dar es Salaam<br />
+              <strong>Notes:</strong> Increased weight due to additional cargo added.
+            </td>
+          </tr>
+
+          <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="toggleDetails(2)">
+            <td class="p-3">2</td>
+            <td class="p-3">2025-07-09 09:50</td>
+            <td class="p-3">u00112</td>
+            <td class="p-3">SystemAdmin</td>
+            <td class="p-3">System</td>
+            <td class="p-3">LOGIN</td>
+            <td class="p-3">-</td>
+            <td class="p-3">Successful login to server</td>
+            <td class="p-3 text-green-600">Success</td>
+            <td class="p-3">10.0.0.5</td>
+            <td class="p-3">System</td>
+            <td class="p-3 text-blue-600 underline">View</td>
+          </tr>
+          <tr id="details-2" class="details-row border-b">
+            <td colspan="12" class="p-3">
+              <strong>Details:</strong> Login from IP 10.0.0.5 using SSH.
+            </td>
+          </tr>
+
+          <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="toggleDetails(3)">
+            <td class="p-3">3</td>
+            <td class="p-3">2025-07-09 10:01</td>
+            <td class="p-3">u00456</td>
+            <td class="p-3">CargoManager</td>
+            <td class="p-3">Booking</td>
+            <td class="p-3">DELETE</td>
+            <td class="p-3">BKG-1287</td>
+            <td class="p-3">Deleted cargo booking record</td>
+            <td class="p-3 text-red-600">Failed</td>
+            <td class="p-3">192.168.1.102</td>
+            <td class="p-3">Application</td>
+            <td class="p-3 text-blue-600 underline">View</td>
+          </tr>
+          <tr id="details-3" class="details-row border-b">
+            <td colspan="12" class="p-3">
+              <strong>Error:</strong> Attempt to delete booking failed due to active shipment.<br />
+              <strong>Additional Info:</strong> User did not have permission.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Export Options -->
+    <div class="mt-4 flex justify-between items-center">
+      <div>Pagination: <button class="text-blue-600">Prev</button> 1 2 3 <button class="text-blue-600">Next</button></div>
+      <div class="space-x-2">
+        <button class="bg-green-500 text-white px-4 py-2 rounded">CSV</button>
+        <button class="bg-red-500 text-white px-4 py-2 rounded">PDF</button>
+        <button class="bg-gray-500 text-white px-4 py-2 rounded">Print</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
